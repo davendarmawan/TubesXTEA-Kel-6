@@ -16,5 +16,6 @@ XTEA bekerja dengan menerima input 64-bit (8 byte) dari pengguna. Input 64-bit a
 
 Setelah menerima input *plaintext* dan *key*, maka sistem akan mendefinisikan sebuah variabel "sum". Variabel ini digunakan dalam proses enkripsi. Proses pengacakan *plaintext* dilakukan secara bit per bit (*bitwise*) dan dilakukan secara berulang-ulang. Pengulangan terbaik dilakukan sebanyak 64 kali. Setiap pengulangan dilakukan, nilai variabel "sum" akan bertambah sebanyak *delta*, yang merupakan konstanta *golden ratio* yang bernilai (9E3779B9)<sub>16</sub>. Proses enkripsi berlangsung melalui operator *bitwise* shift left (<<), shift right (>>), AND (&), dan XOR (^), serta operasi aritmetika penjumlahan (+). 
 
->  A cryptographic system should be secure even if everything about the system, except the key, is public knowledge.” 
-> Auguste Kerckhoffs
+>  A cryptographic system should be secure even if everything about the system, except the key, is public knowledge.”
+>
+> ― Auguste Kerckhoffs
