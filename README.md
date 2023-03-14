@@ -1,5 +1,11 @@
 # XTEA by Kelompok 6
 
+### Anggota Kelompok
+- Maritza Humaira (13221026)
+- Fathiya Amani Shabira (13221032)
+- Daven Darmawan Sendjaya (13221062)
+
+### Brief Description
 **XTEA** (Extended Tiny Encryption Algorithm) merupakan sebuah metode kriptografi yang berbasiskan Feistel Block Cipher. Feistel Block Cipher bekerja dengan membagi input *plaintext* menjadi dua bagian dan mengacaknya dengan *key* yang dimasukkan pengguna. Setelah Feistel Block telah terdefinisi, maka *plaintext* akan dienkripsi berdasarkan algoritma yang digunakan, yaitu XTEA.
 
 XTEA bekerja dengan menerima input 64-bit (8 byte) dari pengguna. Input 64-bit akan dipecah ke dalam dua bagian (*left dan right*) yang masing-masingnya berjumlah 32-bit. Lalu, sistem juga akan menerima input *key* berjumlah 128-bit yang dibagi menjadi empat buah key berjumlah 32-bit, yaitu key0, key1, key2, dan key3.
