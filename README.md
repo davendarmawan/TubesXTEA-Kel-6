@@ -1,2 +1,7 @@
-# TubesXTEA-Kel-6
-Repository ini merupakan tempat pengumpulan tugas besar PMC untuk Kelompok 6
+# XTEA by Kelompok 6
+
+**XTEA** (Extended Tiny Encryption Algorithm) merupakan sebuah metode kriptografi yang berbasiskan Feistel Block Cipher. Feistel Block Cipher bekerja dengan membagi input *plaintext* menjadi dua bagian dan mengacaknya dengan *key* yang dimasukkan pengguna. Setelah Feistel Block telah terdefinisi, maka *plaintext* akan dienkripsi berdasarkan algoritma yang digunakan, yaitu XTEA.
+
+XTEA bekerja dengan menerima input 64-bit (8 byte) dari pengguna. Input 64-bit akan dipecah ke dalam dua bagian (*left dan right*) yang masing-masingnya berjumlah 32-bit. Lalu, sistem juga akan menerima input *key* berjumlah 128-bit yang dibagi menjadi empat buah key berjumlah 32-bit, yaitu key0, key1, key2, dan key3.
+
+Setelah menerima input *plaintext* dan *key*, maka sistem akan mendefinisikan sebuah variabel "sum". Variabel ini digunakan dalam proses enkripsi. Proses pengacakan *plaintext* dilakukan secara bit per bit (*bitwise*) dan dilakukan secara berulang-ulang. Pengulangan terbaik dilakukan sebanyak 64 kali. Setiap pengulangan dilakukan, nilai variabel "sum" akan bertambah sebanyak *delta*, yang merupakan konstanta *golden ratio* yang bernilai (9E3779B9)<sub>16</sub>. Proses enkripsi berlangsung melalui operator *bitwise* shift left (<<), shift right (>>), AND (&), dan XOR (^), serta operasi aritmetika penjumlahan (+). 
