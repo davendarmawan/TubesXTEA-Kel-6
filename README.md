@@ -91,6 +91,10 @@ Setelah itu, proses *hashing* akan dilakukan berdasarkan aturan berikut,
 >
 > Password (hashed): `0xde9360d8`
 
+**Note 1**: *Password* yang telah di-*hashing* tidak dapat dikembalikan kembali ke dalam bentuk *plain text password* yang dimasukkan oleh pengguna. Hal ini dimaksudkan agar *password* hanya bisa diketahui oleh pengguna (bahkan tidak bisa diketahui oleh pihak pembuat algoritma). 
+
+**Note 2**: Saat pengguna hendak login, password yang dimasukkan oleh pengguna akan di-*hashing* dan akan divalidasi dengan *password* yang tersimpan pada sistem (*hashed password*). Bila password sama, maka pengguna bisa mengakses layanan.
+
 #### Langkah 2: Under Construction
 Ditunggu langkah selanjutnya :)
 
