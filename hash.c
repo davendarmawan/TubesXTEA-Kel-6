@@ -33,7 +33,6 @@ int main(){
 
     int f_pw = ((c_pw[0] + c_pw[1]) % c_pw[2]) * ((c_pw[3] + c_pw[4]) % c_pw[5]);
 
+    // Print Hashed Password in Hexadecimal
     printf("%x", f_pw);
-
-
 }

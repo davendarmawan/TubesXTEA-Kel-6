@@ -20,7 +20,7 @@ Setelah menerima input *plaintext* dan *key*, maka sistem akan mendefinisikan se
 #### Pengaturan Kriptografi
 Proses enkripsi dan dekripsi dilakukan dengan pengaturan sebagai berikut,
 - Program tersusun atas empat key dengan jumlah 32-bit, yaitu 0x23FB, 0x89FA, 0xD3BC, dan 0x18AF
-- Operasi *encryption* dilakukan sebanyak 64 kali.
+- Operasi *encryption* dilakukan sebanyak 64 kali
 
 Berikut merupakan potongan kode dari fungsi *encryption* dan *decryption* melalui algoritma XTEA dalam bahasa C,
 
@@ -28,7 +28,7 @@ Berikut merupakan potongan kode dari fungsi *encryption* dan *decryption* melalu
 #include <stdint.h>
 #include <stdio.h>
 
-void encipher(unsigned int num_rounds, uint32_t v[2], uint32_t const key[4]) {
+void encipher(unsignaed int num_rounds, uint32_t v[2], uint32_t const key[4]) {
     unsigned int i;
     uint32_t v0=v[0], v1=v[1], sum=0, delta=0x9E3779B9;
     for (i=0; i < num_rounds; i++) {
