@@ -28,7 +28,7 @@ int main(){
     int c_pw[6];
 
     for (int i = 0; i < 6; i++){
-        c_pw[i] = m_pw[i][0] + m_pw[i][0];
+        c_pw[i] = m_pw[i][0] + m_pw[i][1];
     }
 
     int f_pw = ((c_pw[0] + c_pw[1]) % c_pw[2]) * ((c_pw[3] + c_pw[4]) % c_pw[5]);

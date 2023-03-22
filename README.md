@@ -89,7 +89,7 @@ Setelah itu, proses *hashing* akan dilakukan berdasarkan aturan berikut,
 >
 > Input password: `Pmc%12`
 >
-> Password (hashed): `0xde9360d8`
+> Password (hashed): `0xf229c880`
 
 **Note 1**: *Password* yang telah di-*hashing* tidak dapat dikembalikan kembali ke dalam bentuk *plain text password* yang dimasukkan oleh pengguna. Hal ini dimaksudkan agar *password* hanya bisa diketahui oleh pengguna (bahkan tidak bisa diketahui oleh pihak pembuat algoritma). 
 
