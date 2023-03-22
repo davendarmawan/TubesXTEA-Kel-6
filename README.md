@@ -17,7 +17,7 @@ XTEA bekerja dengan menerima input 64-bit (8 byte) dari pengguna. Input 64-bit a
 Setelah menerima input *plaintext* dan *key*, maka sistem akan mendefinisikan sebuah variabel "sum". Variabel ini digunakan dalam proses enkripsi. Proses pengacakan *plaintext* dilakukan secara bit per bit (*bitwise*) dan dilakukan secara berulang-ulang. Pengulangan terbaik dilakukan sebanyak 64 kali. Setiap pengulangan dilakukan, nilai variabel "sum" akan bertambah sebanyak *delta*, yang merupakan konstanta *golden ratio* yang bernilai (9E3779B9)<sub>16</sub>. Proses enkripsi berlangsung melalui operator *bitwise* shift left (<<), shift right (>>), AND (&), dan XOR (^), serta operasi aritmetika penjumlahan (+). 
 
 ### Cara Kerja
-##### Pengaturan Kriptografi
+#### Pengaturan Kriptografi
 Proses enkripsi dan dekripsi dilakukan dengan pengaturan sebagai berikut,
 - Program tersusun atas empat key dengan jumlah 32-bit, yaitu 0x23FB, 0x89FA, 0xD3BC, dan 0x18AF
 - Operasi *encryption* dilakukan sebanyak 64 kali.
@@ -51,7 +51,7 @@ void decipher(unsigned int num_rounds, uint32_t v[2], uint32_t const key[4]) {
 }
 ```
 
-##### Langkah 1: Hashing Password
+#### Langkah 1: Hashing Password
 Program akan menerima input sebuah string enam karakter sebagai *password* yang harus mengandung kriteria-kriteria berikut,
 - Memiliki minimal 1 buah karakter *uppercase*
 - Memiliki minimal 1 buah karakter *lowercase*
@@ -86,10 +86,12 @@ Setelah itu, proses *hashing* akan dilakukan berdasarkan aturan berikut,
 ```
 
 > **Contoh Proses Hashing Password:**
+>
 > Input password: `Pmc%12`
+>
 > Password (hashed): `0xde9360d8`
 
-##### Langkah 2: Under Construction
+#### Langkah 2: Under Construction
 Ditunggu langkah selanjutnya :)
 
 
