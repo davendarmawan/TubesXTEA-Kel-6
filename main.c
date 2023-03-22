@@ -13,7 +13,7 @@ int main(){
     printf("Masukkan password: ");
     scanf("%s", pw);
 
-    // Divide Int
+    // Divide ASCII Code
     for (int i = 0; i < 6; i++){
         m_pw[i][0] = pw[i] / 2;
         m_pw[i][1] = pw[i] - m_pw[i][0];
