@@ -1,5 +1,5 @@
-# XTEA by Kelompok 6
-> Disusun untuk memenuhi nilai Tugas Besar EL2008: Penyelesaian Masalah dengan C
+# Secure GPS Tracking System: Development of an ESP32-based Tracker with XTEA-Encrypted Coordinates
+> This repository is intended for storing data related to the XTEA GPS Tracking System Project by Group 6 - Problem Solving with C
 
 ### Link ke LaTeX
 [Laporan Tugas Besar XTEA - Kelompok 6](https://www.overleaf.com/project/63d8d457e6db21ec23b3274a)
