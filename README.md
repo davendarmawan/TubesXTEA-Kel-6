@@ -110,7 +110,7 @@ The folders are as follows,
 - Folder `gps_decrypt`: Algorithm for the second ESP32. This algorithm works by decrypting the location data from the first ESP32. This location data will then be compared with the first ESP32 location data acquired from MQTT. After calculating the distance data, buzzer will output tones based on the distance data.
 - Folder `gps_encrypt`: Algorithm for the first ESP32. This algorithms works by acquiring location data from the GPS Module and encrypt the data using XTEA. The encrypted coordinates is then published to MQTT.
 - Folder `gps_publish`: Similar to `gps_encrypt` without encryption (to calculate execution and resource usage without XTEA).
-- Folder `gps_subscribe`: Similar to `gps_subscribe` without decryption (to calculate execution and resource usage without XTEA).
+- Folder `gps_subscribe`: Similar to `gps_decrypt` without decryption (to calculate execution and resource usage without XTEA).
 
 ### Quotes on Cryptography
 >  *"A cryptographic system should be secure even if everything about the system, except the key, is public knowledge.”*
