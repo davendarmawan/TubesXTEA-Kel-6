@@ -30,12 +30,12 @@ The first ESP32 will then receive and decrypt the message sent over the MQTT pro
 
 <figcaption align = "center"><b>Fig. 2 - Block Diagram of The Proposed System</b></figcaption>
 
-#### Pengaturan Kriptografi
-Proses enkripsi dan dekripsi dilakukan dengan pengaturan sebagai berikut,
-- Program tersusun atas empat key dengan jumlah 32-bit, yaitu 0x23FB, 0x89FA, 0xD3BC, dan 0x18AF
-- Operasi *encryption* dilakukan sebanyak 64 kali
+#### Cryptography Settings
+The encryption and decryption procedures are executed with encryption settings as follows,
+- The procedure uses four 32-bit keys, which are 0x23FB, 0x89FA, 0xD3BC, dan 0x18AF
+- The encryption and decryption procedures are executed 64 rounds.
 
-Berikut merupakan potongan kode dari fungsi *encryption* dan *decryption* melalui algoritma XTEA dalam bahasa C,
+The XTEA algorithm (for encryption and decryption) used on this project was written as follows,
 
 ```c
 #include <stdint.h>
@@ -64,55 +64,55 @@ void decipher(unsigned int num_rounds, uint32_t v[2], uint32_t const key[4]) {
 }
 ```
 
-#### Langkah 1: Hashing Password
-Program akan menerima input sebuah string enam karakter sebagai *password* yang harus mengandung kriteria-kriteria berikut,
-- Memiliki minimal 1 buah karakter *uppercase*
-- Memiliki minimal 1 buah karakter *lowercase*
-- Memiliki minimal 1 buah karakter numerik
-- Karakter dalam *password* tidak boleh kurang atau lebih dari 6 karakter
+#### Step 1: Arranging ESP32s and GPS Modules
+In this project, we prepared two ESP32s, with GPS modules connected to each devices. The GPS module is used to acquire GPS coordinates data when the device is connected to satellites. On the first ESP32, only GPS module is connected to the device.
 
-*Password* akan tersusun dengan beberapa karakter *uppercase*, *lowercase*, numerik, serta karakter spesial lainnya. Lalu, setiap karakter akan dicari padanan nilai ASCII-nya. Nilai ASCII dari setiap karakter akan berbentuk *integer*.
+On the second ESP32, we connected GPS module and buzzer. GPS module is used to acquire location data of the second ESP32. This location data would then be compared with the first location data to calculate the distance between both devices. Other than GPS module, a buzzer is also connected to the second device. This buzzer served as a notification to user if the device detects anomalies on the vehicle's distance from the first ESP32.
 
-Password akan dienkripsi menggunakan algoritma XTEA berdasarkan *keys* dan jumlah *rounds* yang telah dideskripsikan sebelumnya.
+#### Step 2: Acquiring First GPS Coordinates
+Both ESP32 acquires GPS coordinates from GPS modules that were connected to the device. Furthermore, we had to place the devices directly to the sky to ensure good connection with the satellites so they could acquire real time coordinates data.
 
-Karena XTEA memerlukan dua input *unsigned integer* 32-bit, maka praktikan harus membagi kode ASCII menjadi dua buah integer berdasarkan aturan berikut,
+After acquiring the location data of the first ESP32, the data should be encrypted using XTEA encryption system. The encrypted location data would then be published to the MQTT protocol. This encryption procedure ensured that the data could be published as safe as possible.
+
+#### Step 3: Acquiring Second GPS Coordinates and Comparing the Distance
+On the second ESP32, the encrypted location data from the first ESP32 was acquired by subscribing to MQTT. Before being processed, the data was decrypted to show the proper coordinate data. At the same time, the GPS module on the second ESP32 also acquired location details on the ESP32.
+
+After getting both location data, we could compute the distance of both devices by using the Haversine formula. This formula is used to find the distance between two coordinate points on a spherical surface when latitude and longitude of the two points have been determined.
+
+To calculate distance, firstly, we need to convert the unit degrees of latitude and longitude to radians with the formula as follows, 
+
+Let $p_{deg}$ be a point given in degrees and $p_{rad}$ be a point given in radians, hence
 ```math
-k_1 = k/2
-```
-```math
-k_2 = k - k_1 
-```
-dengan $k$ merupakan kode ASCII dari karakter, $k_1$ merupakan nilai input pertama, dan $k_2$ merupakan nilai input kedua untuk fungsi *encipher*.
-
-Setelah pembagian kode ASCII dilakukan untuk setiap karakter, maka proses enkripsi berdasarkan algoritma XTEA langsung dijalankan. Setelah kode berhasil terenkripsi, maka kode tersebut akan di-*hashing*.
-
-Sebelum di-*hashing*, maka nilai $k_1$ dan $k_2$ yang telah dienkripsi akan dijumlahkan kembali. Misal, hasil penjumlahan $k_1$ dan $k_2$ adalah $c$ dan *password* memiliki 6 buah karakter, oleh karena itu, hasil penjumlahan akan dinotasikan sebagai berikut,
-
-```math
-c_i, i\in\{1,2,3,4,5,6\}
+k_{rad} = \frac{k_{\deg} \cdot \pi}{180} \text{ radians}
 ```
 
-Setelah itu, proses *hashing* akan dilakukan berdasarkan aturan berikut,
+To calculate distance between two points on a spherical surface, we can use the Haversine formula as follows
 
+Let,
+- $r$ = Radius of spherical surface
+- $\phi_1$ = Latitude of point 1 (radians)
+- $\phi_2$ = Latitude of point 2 (radians)
+- $\lambda_1$ = Longitude of point 1 (radians)
+- $\lambda_2$ = Longitude of point 2 (radians)
+
+then the distance can be calulated as, 
 ```math
-((c_1 + c_2)\bmod c_3) \times ((c_4 + c_5)\bmod c_6)
+d = 2r \cdot \arcsin\left(\sqrt{\sin^2\left(\frac{\phi_2-\phi_1}{2}\right) + \cos(\phi_1) \cdot \cos (\phi_2) \cdot \sin^2\left(\frac{\lambda_2-\lambda_1}{2}\right) } \right)
 ```
+Source: <https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/>
 
-> **Contoh Proses Hashing Password:**
->
-> Input password: `Pmc%12`
->
-> Password (hashed): `0x8a7b4d5e`
+After acquiring distance between these two points, we had to set the conditions of buzzer. If the distance was less than 10 meters, then buzzer would output high pitch tone. If the distance was around 10-20 meters, the buzzer would output low pitch tone. If the distance was over 20 meters, the buzzer would no longer output any tones.
 
-**Note 1**: *Password* yang telah di-*hashing* tidak dapat dikembalikan kembali ke dalam bentuk *plain text password* yang dimasukkan oleh pengguna. Hal ini dimaksudkan agar *password* hanya bisa diketahui oleh pengguna (bahkan tidak bisa diketahui oleh pihak pembuat algoritma). 
+### Remarks on Folders
+Each `.ino` files can be accessed on the `ESP32 Files` folder. The `ESP32 Files` folder contains additional folders which shows the usage of each `.ino` files.
 
-**Note 2**: Saat pengguna hendak login, password yang dimasukkan oleh pengguna akan di-*hashing* dan akan divalidasi dengan *password* yang tersimpan pada sistem (*hashed password*). Bila password sama, maka pengguna bisa mengakses layanan.
+The folders are as follows,
+- Folder `gps_decrypt`: Algorithm for the second ESP32. This algorithm works by decrypting the location data from the first ESP32. This location data will then be compared with the first ESP32 location data acquired from MQTT. After calculating the distance data, buzzer will output tones based on the distance data.
+- Folder `gps_encrypt`: Algorithm for the first ESP32. This algorithms works by acquiring location data from the GPS Module and encrypt the data using XTEA. The encrypted coordinates is then published to MQTT.
+- Folder `gps_publish`: Similar to `gps_encrypt` without encryption (to calculate execution and resource usage without XTEA).
+- Folder `gps_subscribe`: Similar to `gps_subscribe` without decryption (to calculate execution and resource usage without XTEA).
 
-#### Langkah 2: Under Construction
-Ditunggu langkah selanjutnya :)
-
-
-### *Quotes on Cryptography*
+### Quotes on Cryptography
 >  *"A cryptographic system should be secure even if everything about the system, except the key, is public knowledge.”*
 >
 > ― Auguste Kerckhoffs
